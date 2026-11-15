@@ -1,0 +1,149 @@
+{
+  "app": {
+    "ffmpeg": "/opt/homebrew/bin/ffmpeg",
+    "ffprobe": "/opt/homebrew/bin/ffprobe",
+    "systemCursors": [
+      "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Resources/cursors/macos27",
+      "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Resources/cursors"
+    ],
+    "frameDelayMs": 8
+  },
+  "theme": {
+    "font": {
+      "path": "/System/Library/Fonts/SFNSMono.ttf",
+      "weight": "Semibold"
+    },
+    "dialogFont": {
+      "path": "/System/Library/Fonts/SFNS.ttf",
+      "weight": "Semibold"
+    },
+    "textSize": 13,
+    "smallTextSize": 11,
+    "radius": 8,
+    "largeRadius": 10,
+    "colors": {
+      "window": "#111114",
+      "panel": "#17171B",
+      "surface": "#1E1E24F2",
+      "lane": "#222228",
+      "well": "#2A2A31",
+      "selected": "#35353F",
+      "edge": "#FFFFFF2E",
+      "shadow": "#00000066",
+      "separator": "#FFFFFF1F",
+      "tick": "#FFFFFF33",
+      "text": "#F2F2F7",
+      "dimText": "#F2F2F78C",
+      "faintText": "#F2F2F759",
+      "accent": "#7C6CF2",
+      "accentLight": "#9B8EFF",
+      "red": "#FF453A",
+      "redRing": "#FF453A55",
+      "outline": "#FFFFFF",
+      "hover": "#FFFFFF1F",
+      "press": "#00000024",
+      "playhead": "#FFFFFF",
+      "modalShade": "#00000080"
+    }
+  },
+  "toolbar": {
+    "bottomGap": 80,
+    "timerTextSize": 15,
+    "countdownTextSize": 22,
+    "hoverFadeSpeed": 9.0,
+    "pulseSpeed": 5.0,
+    "pressedIconScale": 0.88,
+    "hideWaitMs": 200
+  },
+  "recording": {
+    "fps": 30,
+    "folder": "~/Movies/Spinel Studio",
+    "countdown": 3,
+    "codec": "h264_videotoolbox",
+    "bitrate": "30M",
+    "captureStartTimeout": 3.0,
+    "stopShortcut": "Ctrl+Option+S",
+    "area": {
+      "smallest": 40,
+      "pickerShade": "#00000078",
+      "shade": "#0000004D",
+      "outline": "#FFFFFF",
+      "halo": "#0000008C"
+    }
+  },
+  "export": {
+    "folder": "~/Movies/Spinel Studio",
+    "width": 1920,
+    "height": 1080,
+    "codec": "h264_videotoolbox",
+    "bitrate": "16M"
+  },
+  "editor": {
+    "frameDelayMs": 4,
+    "shortestClip": 0.3,
+    "newZoomLength": 2.0,
+    "zoomStep": 0.25,
+    "zoomRange": [1.25, 3.0],
+    "edgeGrab": 6,
+    "playheadGrab": 8,
+    "historyLimit": 100,
+    "clockRefresh": 0.05,
+    "thumbnailRefresh": 0.5,
+    "exportSlice": 0.1,
+    "progressStep": 0.01,
+    "catchUp": 0.2,
+    "scrubPreview": [960, 540],
+    "thumbnails": {
+      "width": 480,
+      "fps": 6,
+      "tileWidth": 52
+    },
+    "shortcuts": {
+      "play": ["Space"],
+      "split": ["S"],
+      "delete": ["Backspace", "Delete"],
+      "zoomIn": ["Up"],
+      "zoomOut": ["Down"],
+      "undo": ["Cmd+Z"],
+      "redo": ["Shift+Cmd+Z"],
+      "cancel": ["Escape"]
+    }
+  },
+  "render": {
+    "halveBelow": 1.5,
+    "cursorStepsPerFrame": 4
+  },
+  "project": {
+    "background": {
+      "padding": 90,
+      "rounding": 22,
+      "shadow": 0.55,
+      "shadowBlur": 60,
+      "shadowOffset": 24,
+      "gradient": ["#3B2A8F", "#E25C8C"]
+    },
+    "cursor": {
+      "size": 80,
+      "smoothing": 11.0,
+      "clickGrip": 4.0,
+      "clickWindow": [0.15, 0.3],
+      "clickDip": 0.22,
+      "clickDipLength": 0.25,
+      "outline": 7.0,
+      "shadowBlur": 14.0,
+      "shadowOffset": 6.0,
+      "shadowOpacity": 0.45
+    },
+    "camera": {
+      "follow": 5.0,
+      "comfort": 0.5
+    },
+    "zoom": {
+      "amount": 2.0,
+      "ramp": 0.5,
+      "lead": 0.5,
+      "hold": 1.8,
+      "joinWithin": 2.0
+    }
+  }
+}
