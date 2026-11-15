@@ -21,7 +21,7 @@ script/build                     # writes build/Spinel Studio.app
 open "build/Spinel Studio.app"
 ```
 
-`script/build` uses `$SPINEL` if you set it, and `../spinel-win95-workspace/spinel/bin/spinel` otherwise. The first take asks for the Screen Recording permission.
+`script/build` uses `$SPINEL` if you set it, and `spinel` from `PATH` otherwise. The first take asks for the Screen Recording permission.
 
 ## Record
 

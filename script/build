@@ -9,7 +9,11 @@ if ! command -v brew >/dev/null; then
   exit 1
 fi
 brew bundle check --file=Brewfile >/dev/null 2>&1 || brew bundle install --file=Brewfile
-SPINEL=${SPINEL:-../spinel-win95-workspace/spinel/bin/spinel}
+SPINEL=${SPINEL:-$(command -v spinel)}
+if [ -z "$SPINEL" ]; then
+  echo "Spinel not found: put spinel on PATH or set SPINEL=/path/to/spinel/bin/spinel" >&2
+  exit 1
+fi
 FFMPEG=$(brew --prefix)/bin/ffmpeg
 
 # the ScreenCaptureKit bridge, linked into the binary by ffi_lib
