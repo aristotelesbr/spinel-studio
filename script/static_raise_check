@@ -1,0 +1,15 @@
+#!/bin/sh
+# Spinel turns a call it cannot resolve into an unconditional raise in
+# the generated C, which only shows up when that line runs. This compiles
+# to C and fails when any such raise is there.
+cd "$(dirname "$0")/.."
+SPINEL=${SPINEL:-../spinel-win95-workspace/spinel/bin/spinel}
+mkdir -p build
+"$SPINEL" -c bin/spinel_studio.rb -o build/spinel_studio.c >/dev/null 2>&1 || { echo "static raise check: compile to C failed"; exit 1; }
+found=$(grep -o 'sp_raise_nomethod(sp_stage_recv_args_msg("[^"]*"' build/spinel_studio.c | sed 's/.*msg("//; s/"$//' | sort | uniq -c)
+if [ -n "$found" ]; then
+  echo "static raise check FAIL:"
+  echo "$found"
+  exit 1
+fi
+echo "static raise check PASS"

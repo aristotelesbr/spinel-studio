@@ -1,0 +1,4 @@
+#!/bin/sh
+# Runs the Minitest suite under CRuby (no build needed).
+cd "$(dirname "$0")/.."
+exec ruby -W0 -Itest -e 'Dir["test/*_test.rb"].sort.each { |file| require "./#{file}" }'
