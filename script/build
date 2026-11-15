@@ -1,0 +1,44 @@
+#!/bin/sh
+# Installs the Homebrew dependencies (Brewfile) when missing, compiles the
+# app with Spinel and wraps it as build/Spinel Studio.app (double-click to
+# open). Everything it makes goes into build/.
+set -e
+cd "$(dirname "$0")/.."
+if ! command -v brew >/dev/null; then
+  echo "Homebrew is required: https://brew.sh" >&2
+  exit 1
+fi
+brew bundle check --file=Brewfile >/dev/null 2>&1 || brew bundle install --file=Brewfile
+SPINEL=${SPINEL:-../spinel-win95-workspace/spinel/bin/spinel}
+FFMPEG=$(brew --prefix)/bin/ffmpeg
+
+# the ScreenCaptureKit bridge, linked into the binary by ffi_lib
+mkdir -p build
+clang -c -fobjc-arc -O2 -Wall native/capture.m -o build/capture.o
+rm -f build/libspinel_studio_native.a
+ar rcs build/libspinel_studio_native.a build/capture.o
+
+$SPINEL bin/spinel_studio.rb -o build/spinel_studio
+
+APP="build/Spinel Studio.app"
+rm -rf "$APP" build/icon
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" build/icon/AppIcon.iconset
+cp build/spinel_studio "$APP/Contents/MacOS/spinel_studio"
+cp config/Info.plist "$APP/Contents/Info.plist"
+cp config/application.json "$APP/Contents/Resources/application.json"
+
+# the app icon, painted by Spinel
+$SPINEL script/icon.rb -o build/icon/icon
+build/icon/icon build/icon/icon.raw
+"$FFMPEG" -v error -y -f rawvideo -pix_fmt bgra -s 1024x1024 -i build/icon/icon.raw build/icon/icon.png
+for s in 16 32 128 256 512; do
+  sips -z $s $s build/icon/icon.png --out build/icon/AppIcon.iconset/icon_${s}x${s}.png >/dev/null
+  sips -z $((s * 2)) $((s * 2)) build/icon/icon.png --out build/icon/AppIcon.iconset/icon_${s}x${s}@2x.png >/dev/null
+done
+iconutil -c icns build/icon/AppIcon.iconset -o "$APP/Contents/Resources/AppIcon.icns"
+
+# macOS ties the Screen Recording permission to the signature. Ad hoc
+# signing (the default) changes it on every build, so the permission is
+# asked again; a fixed certificate (SIGN_IDENTITY) keeps it.
+codesign --force --sign "${SIGN_IDENTITY:--}" "$APP" 2>/dev/null
+echo "built $APP"
