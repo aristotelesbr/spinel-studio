@@ -52,6 +52,7 @@ class Window
   def mouse_move(_x, _y); end
   def mouse_up(_x, _y, _button); end
   def key_down(_key, _modifiers); end
+  def file_opened(_path); end
 
   def needs_redraw?
     true
@@ -114,9 +115,14 @@ class Window
   end
 
   # Asks where to save, with the system's Save panel on this window,
-  # suggesting path; the answer comes later, through SaveDialog.
+  # suggesting path; the answer comes later, through FileDialog.
   def ask_save_path(path)
-    SaveDialog.open(@window, path)
+    FileDialog.save(@window, path)
+  end
+
+  # Asks for a file to open, starting in folder, in a panel of its own.
+  def ask_open_path(folder)
+    FileDialog.open(nil, folder)
   end
 
   # The macOS window number, to leave this window out of a capture.
@@ -148,6 +154,7 @@ class Window
     elsif event.mouse_move? then mouse_move(event.x, event.y)
     elsif event.mouse_up? then mouse_up(event.x, event.y, event.button)
     elsif event.key_down? then key_down(event.key, event.modifiers)
+    elsif event.file_opened? then file_opened(event.file_path)
     end
   end
 

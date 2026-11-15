@@ -2,6 +2,8 @@
 # role SDL2::Event plays in ruby-sdl2). One object is filled again by
 # each #poll, so the event loop allocates nothing.
 class Event
+  DROP_DATA = 40   # offset of SDL_DropEvent.data, the file's path
+
   def initialize
     @buffer = IO::Buffer.new(128)
   end
@@ -34,6 +36,19 @@ class Event
 
   def key_down?
     type == SDL::KEYDOWN
+  end
+
+  # A file dropped on a window, or a document the system asks the app to
+  # open (a double click in Finder).
+  def file_opened?
+    type == SDL::DROP_FILE
+  end
+
+  # The path of the file to open; "" when the event carries none.
+  def file_path
+    CString.memcpy(SDL.pointer_slot, @buffer.slice(DROP_DATA, 8), 8)
+    pointer = SDL.first_pointer(SDL.pointer_slot)
+    pointer == nil ? "" : CString.strstr(pointer, "")
   end
 
   # Pointer position in points.

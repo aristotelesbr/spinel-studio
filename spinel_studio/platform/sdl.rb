@@ -41,7 +41,11 @@ module SDL
   ffi_func :SDL_GetScancodeName,     [:uint32], :str
   ffi_callback :dialog_answered, [:ptr, :ptr, :int], :void
   ffi_func :SDL_ShowSaveFileDialog,  [:dialog_answered, :ptr, :ptr, :ptr, :int, :str], :void
+  ffi_func :SDL_ShowOpenFileDialog,  [:dialog_answered, :ptr, :ptr, :ptr, :int, :str, :bool], :void
   ffi_read_ptr :first_pointer, 0
+  # ffi_read_ptr reads through C pointers, not inside an IO::Buffer, so a
+  # pointer field of an event is copied here first (see Event#file_path).
+  ffi_buffer :pointer_slot, 8
   ffi_func :SDL_CreateColorCursor,   [:ptr, :int, :int], :ptr
   ffi_func :SDL_DestroyCursor,       [:ptr], :void
   ffi_func :SDL_AddSurfaceAlternateImage, [:ptr, :ptr], :bool
@@ -73,6 +77,7 @@ module SDL
   MOUSEDOWN   = 0x401
   MOUSEUP     = 0x402
   WINDOW_CLOSE_REQUESTED = 0x210
+  DROP_FILE = 0x1000                 # also how macOS asks the app to open a document
   SCANCODE_ESCAPE = 41
 
   CURSOR_DEFAULT = 0

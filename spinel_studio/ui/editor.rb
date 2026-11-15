@@ -229,17 +229,17 @@ class Editor < Window
   # The system's Save panel, suggesting the take's name in the export
   # folder; the export starts when a path comes back.
   def ask_where_to_export
-    return if SaveDialog.state == :open
+    return if FileDialog.state == :open
     @player.pause
     paint_panel
     ask_save_path("#{@settings.export.folder}/#{File.basename(@recording.dir)}.mp4")
   end
 
   def take_save_answer
-    state = SaveDialog.state
+    state = FileDialog.state
     return if state == :closed || state == :open
-    SaveDialog.reset
-    start_export(SaveDialog.path) if state == :chosen
+    FileDialog.reset
+    start_export(FileDialog.path) if state == :chosen
   end
 
   # The export runs in its own window; this one waits behind it, dimmed.
