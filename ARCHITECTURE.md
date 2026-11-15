@@ -6,8 +6,12 @@ there. Nothing here is a framework of its own: plain classes, one per idea.
 
 ## A take on disk
 
-Each recording is a folder under the recordings folder (setting
-`recording.folder`):
+Each recording is a project: a folder named `NAME.spinelstudio` under the
+recordings folder (setting `recording.folder`), as Cap keeps its
+recordings in `.cap` folders. `config/Info.plist` declares the extension
+as a package, so Finder shows a project as one document and opens it with
+the app. Takes from before the extension are plain folders and open the
+same way (`ProjectFolder`). A project holds:
 
 | File | Written by | What it holds |
 | --- | --- | --- |

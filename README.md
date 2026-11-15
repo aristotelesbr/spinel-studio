@@ -27,7 +27,7 @@ open "build/Spinel Studio.app"
 
 ![The floating bar: Display, Area, record, the timer and close](docs/toolbar.png)
 
-A floating bar opens at the bottom of the screen. Pick **Display** or **Area** (drag a rectangle; Esc cancels) and press the red button. After a short countdown the bar shows the time. It stays on screen but out of the video, and so do the marks around a picked area. The red button, or Control+Option+S, stops the take, and it opens in the editor. Takes are saved under `~/Movies/Spinel Studio`.
+A floating bar opens at the bottom of the screen. Pick **Display** or **Area** (drag a rectangle; Esc cancels) and press the red button. After a short countdown the bar shows the time. It stays on screen but out of the video, and so do the marks around a picked area. The red button, or Control+Option+S, stops the take, and it opens in the editor.
 
 ## Edit
 
@@ -38,8 +38,13 @@ A floating bar opens at the bottom of the screen. Pick **Display** or **Area** (
 | ⌫ or Delete | Remove the selected clip or zoom |
 | Up, Down | Zoom in or out more on the selected zoom |
 | Cmd+Z, Shift+Cmd+Z | Undo, redo |
+| Cmd+S | Save (every edit is saved anyway) |
 
 Drag the playhead or click the ruler to move in the video. Drag the outer edge of a clip to trim it. Drag in an empty spot of the Zoom track to add a zoom, and drag a zoom or its edges to move or resize it. **Export** asks where to save, shows its progress in a small window (Cancel or Esc stops it), and opens the video when it is done.
+
+## Projects
+
+Each take is a project, saved as `NAME.spinelstudio` under `~/Movies/Spinel Studio`. Finder shows it as one document. Every edit is saved as you make it (Cmd+S saves again and says so), so you can close the editor and go on later: double-click the project in Finder, or press the folder button on the bar and pick it. Export writes the finished video; the project stays as it was.
 
 ## What is in it
 
