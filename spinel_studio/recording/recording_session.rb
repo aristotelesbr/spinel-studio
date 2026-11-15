@@ -53,7 +53,7 @@ class RecordingSession
   def start(area, excluded)
     folder = @settings.folder
     Dir.mkdir(folder) unless Dir.exist?(folder)
-    dir = "#{folder}/#{Time.now.strftime("%Y-%m-%d %H.%M.%S")}"
+    dir = "#{folder}/#{Time.now.strftime("%Y-%m-%d %H.%M.%S")}.#{@settings.project_extension}"
     @recorder = Recorder.new(dir, area, excluded, @settings)
     @seconds = 0
     @state = @recorder.start ? :recording : :idle

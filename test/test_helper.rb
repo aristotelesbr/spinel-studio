@@ -3,7 +3,7 @@ require "minitest/autorun"
 # The tests run the pure Ruby classes under CRuby. The files that bind
 # native libraries (ffi_func) only compile with Spinel, so they stay out.
 PURE_FILES = %w[
-  settings project/span project/zoom_plan project/timeline project/history project/track project/project_config
+  settings project/span project/zoom_plan project/timeline project/history project/track project/project_config project/project_folder
   recording/recording_meta render/canvas render/cursor render/camera render/compositor render/cursor_sprite
   recording/area_outline recording/recording_session ui/theme ui/shortcuts ui/button ui/system_cursor ui/toolbar ui/timeline_view
 ].freeze

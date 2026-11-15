@@ -11,7 +11,7 @@ class ToolbarTest < Minitest::Test
   end
 
   def test_each_button_answers_where_it_is_drawn
-    [:display, :area, :record, :close].each do |button|
+    [:display, :area, :record, :open, :close].each do |button|
       assert_equal button, @toolbar.button_at(*point_on(button))
     end
     assert_equal :none, @toolbar.button_at(Toolbar::MARGIN + Toolbar::TIMER_LEFT + 10, 40)
@@ -24,6 +24,7 @@ class ToolbarTest < Minitest::Test
     assert @toolbar.enabled?(:close)
     refute @toolbar.enabled?(:display)
     refute @toolbar.enabled?(:area)
+    refute @toolbar.enabled?(:open)
   end
 
   def test_the_timer_shows_minutes_and_seconds

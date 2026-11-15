@@ -88,15 +88,17 @@ class ToolbarSettings
   end
 end
 
-# "recording": the take (frame rate, folder, countdown, encoding, the
-# key that stops it) and the marks of a picked area.
+# "recording": the take (frame rate, folder, the project folders'
+# extension, countdown, encoding, the key that stops it) and the marks of
+# a picked area.
 class RecordingSettings
-  attr_reader :fps, :folder, :countdown, :codec, :bitrate, :capture_start_timeout, :stop_shortcut,
+  attr_reader :fps, :folder, :project_extension, :countdown, :codec, :bitrate, :capture_start_timeout, :stop_shortcut,
               :smallest_area, :picker_shade, :area_shade, :outline_color, :halo_color
 
   def initialize(data)
     @fps = data["fps"].to_i
     @folder = File.expand_path(data["folder"].to_s)
+    @project_extension = data["projectExtension"].to_s
     @countdown = data["countdown"].to_i
     @codec = data["codec"].to_s
     @bitrate = data["bitrate"].to_s

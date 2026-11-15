@@ -16,7 +16,8 @@ class Editor < Window
   COMMAND = 0x0CC0   # SDL_KMOD_CTRL | SDL_KMOD_GUI: Cmd, or Ctrl
 
   def initialize(dir, settings)
-    super("Spinel Studio — Editor", WIDTH, HEIGHT, 0, settings.editor.frame_delay_ms)
+    super("Spinel Studio — #{ProjectFolder.name(dir, settings.recording.project_extension)}", WIDTH, HEIGHT, 0,
+          settings.editor.frame_delay_ms)
     raise_to_front
     @settings = settings
     @editor = settings.editor
@@ -151,9 +152,17 @@ class Editor < Window
     when :zoom_in then edit { @view.change_amount(1) }
     when :zoom_out then edit { @view.change_amount(-1) }
     when :export then ask_where_to_export
+    when :save then save
     when :undo then restore(@history.undo)
     when :redo then restore(@history.redo)
     end
+  end
+
+  # Every change is saved as it is made; Cmd+S saves again and says so.
+  def save
+    @recording.save
+    @status = "Saved"
+    paint_panel
   end
 
   def edit
@@ -171,6 +180,7 @@ class Editor < Window
 
   # Saves the project and shows the change at the current time.
   def changed
+    @status = ""
     @recording.save
     seek(playhead_time)
     paint_panel

@@ -58,6 +58,7 @@
   "recording": {
     "fps": 30,
     "folder": "~/Movies/Spinel Studio",
+    "projectExtension": "spinelstudio",
     "countdown": 3,
     "codec": "h264_videotoolbox",
     "bitrate": "30M",
@@ -106,6 +107,7 @@
       "zoomOut": ["Down"],
       "undo": ["Cmd+Z"],
       "redo": ["Shift+Cmd+Z"],
+      "save": ["Cmd+S"],
       "cancel": ["Escape"]
     }
   },

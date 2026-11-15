@@ -15,7 +15,8 @@ class ShortcutsTest < Minitest::Test
   def test_modifiers_must_match
     assert_equal :undo, @shortcuts.action_for("Z", true, false, false)
     assert_equal :redo, @shortcuts.action_for("Z", true, true, false)
-    assert_equal :none, @shortcuts.action_for("S", true, false, false)
+    assert_equal :save, @shortcuts.action_for("S", true, false, false)
+    assert_equal :none, @shortcuts.action_for("S", false, true, false)
   end
 
   def test_labels_show_the_first_key

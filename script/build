@@ -45,4 +45,7 @@ iconutil -c icns build/icon/AppIcon.iconset -o "$APP/Contents/Resources/AppIcon.
 # signing (the default) changes it on every build, so the permission is
 # asked again; a fixed certificate (SIGN_IDENTITY) keeps it.
 codesign --force --sign "${SIGN_IDENTITY:--}" "$APP" 2>/dev/null
+
+# let Finder know the app opens .spinelstudio projects
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$APP"
 echo "built $APP"

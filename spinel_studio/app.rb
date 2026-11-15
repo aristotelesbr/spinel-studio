@@ -3,7 +3,8 @@
 # frame around a picked area) stays on screen but out of the video,
 # showing the time and the stop button. The recording settings' stop
 # shortcut (Control+Option+S) also stops.
-# The take then opens in the editor.
+# The take then opens in the editor. A project made earlier opens from
+# the bar's folder button, or from Finder.
 class App < Window
   FLAGS = SDL::WINDOW_BORDERLESS | SDL::WINDOW_TRANSPARENT | SDL::WINDOW_ALWAYS_ON_TOP |
           SDL::WINDOW_UTILITY | SDL::WINDOW_NOT_FOCUSABLE
@@ -62,7 +63,13 @@ class App < Window
     click(button) if button != :none && button == pressed
   end
 
+  # A project Finder asks the app to open (a double click on it).
+  def file_opened(path)
+    open_project(path)
+  end
+
   def update
+    take_open_answer
     now = SpinelStudio.now
     @session.tick(now, @area, excluded_windows)
     stop_recording if @session.recording? && stop_keys_down?
@@ -94,7 +101,15 @@ class App < Window
     when :display then pick_display
     when :area then pick_area
     when :record then @session.recording? ? stop_recording : @session.start_countdown(SpinelStudio.now)
+    when :open then ask_open_path(@settings.recording.folder)
     end
+  end
+
+  def take_open_answer
+    state = FileDialog.state
+    return if state == :closed || state == :open
+    FileDialog.reset
+    open_project(FileDialog.path) if state == :chosen
   end
 
   def pick_display
@@ -145,9 +160,15 @@ class App < Window
     [number, @frame.number].reject(&:zero?)
   end
 
-  # The take opens in the editor; the bar comes back when it closes.
   def stop_recording
-    dir = @session.stop
+    open_project(@session.stop)
+  end
+
+  # The project opens in the editor; the bar comes back when it closes.
+  # A path that is not a take is left alone.
+  def open_project(path)
+    dir = ProjectFolder.resolve(path)
+    return if dir.empty? || @session.recording?
     hide
     @frame.hide
     editor = Editor.new(dir, @settings)

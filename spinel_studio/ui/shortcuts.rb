@@ -3,7 +3,7 @@
 # names are SDL's; Cmd means Cmd or Ctrl.
 class Shortcuts
   ACTIONS = { "play" => :play, "split" => :split, "delete" => :delete, "zoomIn" => :zoom_in,
-              "zoomOut" => :zoom_out, "undo" => :undo, "redo" => :redo, "cancel" => :cancel }.freeze
+              "zoomOut" => :zoom_out, "undo" => :undo, "redo" => :redo, "save" => :save, "cancel" => :cancel }.freeze
 
   def initialize(data)
     @list = []

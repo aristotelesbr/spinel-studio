@@ -7,7 +7,7 @@
 # around it for the shadow, and #dots turns points into pixels.
 class Toolbar
   MARGIN = 16
-  PILL_WIDTH = 300
+  PILL_WIDTH = 344
   PILL_HEIGHT = 56
   WIDTH = PILL_WIDTH + 2 * MARGIN
   HEIGHT = PILL_HEIGHT + 2 * MARGIN
@@ -19,8 +19,8 @@ class Toolbar
   TIMER_WIDTH = 84
   SEPARATORS = [100, 244]
 
-  # The buttons (:display, :area, :record, :close) and where they sit.
-  BUTTON_LEFT = { display: 8, area: 52, record: 108, close: 252 }.freeze
+  # The buttons (:display, :area, :record, :open, :close) and where they sit.
+  BUTTON_LEFT = { display: 8, area: 52, record: 108, open: 252, close: 296 }.freeze
 
 
   ICON_CENTER = 20
@@ -46,7 +46,7 @@ class Toolbar
     @hover = :none
     @pressed = :none
     @seconds = 0
-    @highlight = { display: 0.0, area: 0.0, record: 0.0, close: 0.0 }
+    @highlight = { display: 0.0, area: 0.0, record: 0.0, open: 0.0, close: 0.0 }
     @clock = 0.0
     @icon_left = 0.0
     @icon_top = 0.0
@@ -151,6 +151,7 @@ class Toolbar
     when :display then display_icon(color)
     when :area then area_icon(color)
     when :record then record_icon
+    when :open then open_icon(color)
     else close_icon(color)
     end
   end
@@ -201,6 +202,12 @@ class Toolbar
       @canvas.circle(icon_x(20), icon_y(20), icon_length(13), @theme.red_ring)
       @canvas.circle(icon_x(20), icon_y(20), icon_length(9 + @highlight[:record]), @theme.red)
     end
+  end
+
+  # A folder: its outline and the tab on top.
+  def open_icon(color)
+    @canvas.stroke_rounded(icon_x(9), icon_y(14), icon_length(22), icon_length(15), icon_length(3), icon_length(2), color)
+    @canvas.fill_rounded(icon_x(9), icon_y(11), icon_length(10), icon_length(5), icon_length(2), color)
   end
 
   def close_icon(color)
