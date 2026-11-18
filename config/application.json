@@ -92,6 +92,7 @@
     "thumbnailRefresh": 0.5,
     "exportSlice": 0.1,
     "progressStep": 0.01,
+    "timeLeftAfter": 3.0,
     "catchUp": 0.2,
     "scrubPreview": [960, 540],
     "thumbnails": {
