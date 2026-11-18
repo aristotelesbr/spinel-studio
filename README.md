@@ -1,5 +1,7 @@
 # <img src="docs/icon.png" alt="" height="64"> Spinel Studio
 
+[![Test](https://github.com/aristotelesbr/spinel-studio/actions/workflows/test.yml/badge.svg)](https://github.com/aristotelesbr/spinel-studio/actions/workflows/test.yml)
+
 A screen recorder for macOS, written in Ruby and compiled to a native app by [Spinel](https://github.com/matz/spinel). It puts your recording on a wallpaper with rounded corners and a shadow, glides the cursor instead of shaking with your hand, and zooms in where you click. An editor cuts the take and adjusts the zooms before the export. ffmpeg only encodes and decodes the video; everything in between is Ruby. The only code that is not Ruby is a small bridge to ScreenCaptureKit in `native/capture.m`.
 
 ![The editor playing a take, then a zoom made larger on the timeline](docs/editing.gif)
