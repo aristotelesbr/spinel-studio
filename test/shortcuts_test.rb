@@ -16,6 +16,8 @@ class ShortcutsTest < Minitest::Test
     assert_equal :undo, @shortcuts.action_for("Z", true, false, false)
     assert_equal :redo, @shortcuts.action_for("Z", true, true, false)
     assert_equal :save, @shortcuts.action_for("S", true, false, false)
+    assert_equal :export, @shortcuts.action_for("E", true, false, false)
+    assert_equal :none, @shortcuts.action_for("E", false, false, false)
     assert_equal :none, @shortcuts.action_for("S", false, true, false)
   end
 
@@ -24,6 +26,7 @@ class ShortcutsTest < Minitest::Test
     assert_equal "⌫", @shortcuts.label(:delete)
     assert_equal "⌘Z", @shortcuts.label(:undo)
     assert_equal "⇧⌘Z", @shortcuts.label(:redo)
+    assert_equal "⌘E", @shortcuts.label(:export)
     assert_equal "esc", @shortcuts.label(:cancel)
   end
 
