@@ -1,5 +1,6 @@
 # The export in progress: a small window with the file's name, a bar,
-# the percentage and a Cancel button (or the cancel shortcut), in the
+# the percentage, the time left once the export has run a few seconds
+# and a Cancel button (or the cancel shortcut), in the
 # theme's dialog font, as macOS dialogs read. It runs
 # its own loop, so the editor behind it takes no input and stays dimmed
 # until the video is done or the export is cancelled.
@@ -12,6 +13,7 @@ class ExportWindow < Window
   BAR_TOP = 76
   BAR_HEIGHT = 6
   BUTTON_TOP = 96
+  LEFT_TOP = 104
   BUTTON_WIDTH = 104
   BUTTON_HEIGHT = 30
   TITLE = "Exporting video"
@@ -33,6 +35,7 @@ class ExportWindow < Window
     @theme = settings.theme
     @slice = settings.editor.export_slice
     @progress_step = settings.editor.progress_step
+    @time_left_after = settings.editor.time_left_after
     @shortcuts = settings.editor.shortcuts
     @typeface = Typeface.new(@theme.small_text_size * scale, @theme.text_size * scale, @theme.dialog_font)
     @canvas = Canvas.new((WIDTH * scale).to_i, (HEIGHT * scale).to_i)
@@ -43,6 +46,8 @@ class ExportWindow < Window
     @hovered = false
     @held = false
     @shown_progress = -1.0
+    @started = SpinelStudio.now
+    @shown_left = ""
     @result = :running
   end
 
@@ -52,11 +57,12 @@ class ExportWindow < Window
   end
 
   def needs_redraw?
-    @exporter.progress - @shown_progress >= @progress_step || @shown_progress < 0
+    @exporter.progress - @shown_progress >= @progress_step || @shown_progress < 0 || time_left != @shown_left
   end
 
   def draw
     @shown_progress = @exporter.progress
+    @shown_left = time_left
     paint
     @picture.update(@canvas.pixels)
     copy(@picture, 0, 0, WIDTH, HEIGHT)
@@ -99,6 +105,18 @@ class ExportWindow < Window
     close
   end
 
+  # "about 12 s left" from the time spent and the progress made, or ""
+  # while it is too early for a fair estimate.
+  def time_left
+    elapsed = SpinelStudio.now - @started
+    progress = @exporter.progress
+    return "" if elapsed < @time_left_after || progress <= 0.0
+    seconds = (elapsed * (1.0 - progress) / progress).ceil
+    return "" if seconds <= 0
+    return "about #{seconds} s left" if seconds < 60
+    "about #{seconds / 60} min #{seconds % 60} s left"
+  end
+
   def dots(points)
     points * scale
   end
@@ -114,6 +132,7 @@ class ExportWindow < Window
     @canvas.fill_rounded(dots(MARGIN), dots(BAR_TOP), dots(bar_width), dots(BAR_HEIGHT), dots(BAR_HEIGHT / 2.0), @theme.lane)
     filled = BAR_HEIGHT + (bar_width - BAR_HEIGHT) * progress
     @canvas.fill_rounded(dots(MARGIN), dots(BAR_TOP), dots(filled), dots(BAR_HEIGHT), dots(BAR_HEIGHT / 2.0), @theme.accent)
+    label(@shown_left, MARGIN, LEFT_TOP, false, @theme.dim_text)
     @cancel.paint(@canvas, @typeface, @theme, scale, @hovered, @held)
   end
 

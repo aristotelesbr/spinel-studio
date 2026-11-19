@@ -133,7 +133,7 @@ end
 class EditorSettings
   attr_reader :frame_delay_ms, :shortest_clip, :new_zoom_length, :zoom_step, :smallest_zoom, :largest_zoom,
               :edge_grab, :playhead_grab, :history_limit, :clock_refresh, :thumbnail_refresh, :export_slice,
-              :progress_step, :catch_up, :scrub_width, :scrub_height, :thumbnail_width, :thumbnail_fps,
+              :progress_step, :time_left_after, :catch_up, :scrub_width, :scrub_height, :thumbnail_width, :thumbnail_fps,
               :tile_width, :shortcuts, :zoom_amount
 
   def initialize(data, zoom_amount)
@@ -150,6 +150,7 @@ class EditorSettings
     @thumbnail_refresh = data["thumbnailRefresh"].to_f
     @export_slice = data["exportSlice"].to_f
     @progress_step = data["progressStep"].to_f
+    @time_left_after = data["timeLeftAfter"].to_f
     @catch_up = data["catchUp"].to_f
     @scrub_width = data["scrubPreview"][0].to_i
     @scrub_height = data["scrubPreview"][1].to_i
