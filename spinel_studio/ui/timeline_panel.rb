@@ -34,7 +34,7 @@ class TimelinePanel
     @clock = Canvas.new((CLOCK_WIDTH * scale).to_i, (CONTROL_SIZE * scale).to_i)
     @play = Button.new(16, HEADER_TOP, CONTROL_SIZE, CONTROL_SIZE, "", :secondary, :play)
     @split = Button.new(1060, HEADER_TOP, 92, CONTROL_SIZE, "Split", :secondary, :split, shortcuts.label(:split))
-    @export = Button.new(1160, HEADER_TOP, 104, CONTROL_SIZE, "Export", :primary, :export)
+    @export = Button.new(1160, HEADER_TOP, 104, CONTROL_SIZE, "Export", :primary, :export, shortcuts.label(:export))
     @minus = Button.new(356, HEADER_TOP, CONTROL_SIZE, CONTROL_SIZE, "-", :secondary, :zoom_out)
     @plus = Button.new(456, HEADER_TOP, CONTROL_SIZE, CONTROL_SIZE, "+", :secondary, :zoom_in)
     @delete = Button.new(504, HEADER_TOP, 100, CONTROL_SIZE, "Delete", :danger, :delete, shortcuts.label(:delete))

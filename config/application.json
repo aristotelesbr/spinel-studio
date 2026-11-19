@@ -108,6 +108,7 @@
       "undo": ["Cmd+Z"],
       "redo": ["Shift+Cmd+Z"],
       "save": ["Cmd+S"],
+      "export": ["Cmd+E"],
       "cancel": ["Escape"]
     }
   },
