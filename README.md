@@ -56,7 +56,7 @@ Each take is a project, saved as `NAME.spinelstudio` under `~/Movies/Spinel Stud
 - Zooms made from the bursts of clicks, which ease in and out and follow the cursor near the edges.
 - A timeline with a Video track (split, trim, delete) and a Zoom track (add, move, resize, amount), undo and redo.
 - Export at 1920×1080 with ffmpeg's VideoToolbox encoder.
-- Every setting in `config/application.json`: colors, fonts, shortcuts, encoding, timings. Override any of them in `~/Library/Application Support/Spinel Studio/settings.json`.
+- Every setting in `config/application.json`: colors, fonts, shortcuts, encoding, timings. Override any of them in `~/Library/Application Support/Spinel Studio/settings.json`; [docs/SETTINGS.md](docs/SETTINGS.md) lists each one.
 
 ## Development
 
