@@ -4,9 +4,10 @@
 set -e
 cd "$(dirname "$0")/.."
 take=build/render-check
+[ "$(uname)" = Linux ] && codec=libx264 || codec=h264_videotoolbox
 rm -rf "$take"
 ruby test/support/sample_take.rb "$take"
-ffmpeg -v error -y -f lavfi -i testsrc2=size=3024x1964:rate=30:duration=6 -c:v h264_videotoolbox -b:v 20M "$take/screen.mov"
+ffmpeg -v error -y -f lavfi -i testsrc2=size=3024x1964:rate=30:duration=6 -c:v "$codec" -b:v 20M "$take/screen.mov"
 build/spinel_studio export "$take" >/dev/null
 result=$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=width,height,nb_read_frames -of csv=p=0 "$take/studio.mp4")
 if [ "$result" = "1920,1080,150" ]; then

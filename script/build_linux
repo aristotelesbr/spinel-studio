@@ -1,0 +1,30 @@
+#!/bin/sh
+# Compiles the app with Spinel on Linux (X11) into build/spinel_studio.
+# script/build runs this on Linux. It installs nothing: it names the
+# libraries that are missing.
+set -e
+cd "$(dirname "$0")/.."
+missing=""
+for library in sdl3 sdl3-ttf x11 xfixes; do
+  pkg-config --exists "$library" || missing="$missing $library"
+done
+command -v ffmpeg >/dev/null || missing="$missing ffmpeg"
+if [ -n "$missing" ]; then
+  echo "missing:$missing" >&2
+  echo "on Debian or Ubuntu: apt install libsdl3-dev libsdl3-ttf-dev libx11-dev libxfixes-dev ffmpeg" >&2
+  exit 1
+fi
+SPINEL=${SPINEL:-$(command -v spinel)}
+if [ -z "$SPINEL" ]; then
+  echo "Spinel not found: put spinel on PATH or set SPINEL=/path/to/spinel/bin/spinel" >&2
+  exit 1
+fi
+
+# the X11 capture, linked into the binary by ffi_lib
+mkdir -p build
+cc -c -O2 -Wall native/capture_x11.c -o build/capture.o
+rm -f build/libspinel_studio_native.a
+ar rcs build/libspinel_studio_native.a build/capture.o
+
+"$SPINEL" bin/spinel_studio_linux.rb -o build/spinel_studio
+echo "built build/spinel_studio"

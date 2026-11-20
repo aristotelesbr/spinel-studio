@@ -1,0 +1,13 @@
+{
+  "app": {
+    "ffmpeg": "/usr/bin/ffmpeg",
+    "ffprobe": "/usr/bin/ffprobe",
+    "systemCursors": []
+  },
+  "theme": {
+    "font": { "path": "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf", "weight": "Bold" },
+    "dialogFont": { "path": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "weight": "Bold" }
+  },
+  "recording": { "codec": "libx264" },
+  "export": { "codec": "libx264" }
+}

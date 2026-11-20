@@ -4,6 +4,9 @@
 # open). Everything it makes goes into build/.
 set -e
 cd "$(dirname "$0")/.."
+if [ "$(uname)" = Linux ]; then
+  exec script/build_linux
+fi
 if ! command -v brew >/dev/null; then
   echo "Homebrew is required: https://brew.sh" >&2
   exit 1

@@ -25,6 +25,17 @@ open "build/Spinel Studio.app"
 
 `script/build` uses `$SPINEL` if you set it, and `spinel` from `PATH` otherwise. The first take asks for the Screen Recording permission.
 
+### On Linux (X11, in progress)
+
+The same code builds on Linux with X11. You need a built Spinel compiler and, on Debian or Ubuntu, `apt install libsdl3-dev libsdl3-ttf-dev libx11-dev libxfixes-dev ffmpeg fonts-dejavu-core`.
+
+```sh
+script/build                     # writes build/spinel_studio
+build/spinel_studio
+```
+
+It has only run on a virtual screen so far, and the bar is not left out of the recording yet. Wayland is not supported.
+
 ## Record
 
 ![The floating bar: Display, Area, record, the timer and close](docs/toolbar.png)
