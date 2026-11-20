@@ -1,0 +1,17 @@
+#!/bin/sh
+# Records 2 s of a virtual X11 screen with the compiled app and checks the
+# take: a 1280x720 video and a mouse log. Linux only; needs Xvfb. Run
+# script/build first.
+set -e
+cd "$(dirname "$0")/.."
+take=build/record-check
+rm -rf "$take"
+xvfb-run -a -s "-screen 0 1280x720x24" build/spinel_studio record "$take" 2 >/dev/null
+size=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$take/screen.mov")
+samples=$(wc -l < "$take/mouse.log")
+if [ "$size" = "1280,720" ] && [ "$samples" -gt 10 ]; then
+  echo "record check PASS ($size, $samples mouse samples)"
+else
+  echo "record check FAIL: expected 1280,720 and a mouse log, got $size and $samples samples"
+  exit 1
+fi
