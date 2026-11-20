@@ -9,6 +9,7 @@
 #
 # ffmpeg encodes and decodes video; the rest is this program.
 
+require_relative "../spinel_studio/platform/macos"
 require_relative "../spinel_studio"
 
 settings = Settings.load

@@ -1,12 +1,11 @@
 # Spinel Studio's code, loaded in dependency order: settings, the native
-# libraries, a take as data, rendering, recording and the windows.
+# libraries, a take as data, rendering, recording and the windows. The
+# parts that differ by system (screen capture, the mouse, system cursors)
+# are loaded before this file, by spinel_studio/platform/macos.
 require_relative "spinel_studio/settings"
 require_relative "spinel_studio/platform/sdl"
-require_relative "spinel_studio/platform/mouse"
 require_relative "spinel_studio/platform/typeface"
-require_relative "spinel_studio/platform/screen_capture"
 require_relative "spinel_studio/platform/ffmpeg"
-require_relative "spinel_studio/platform/core_graphics"
 require_relative "spinel_studio/platform/event"
 require_relative "spinel_studio/platform/window"
 require_relative "spinel_studio/platform/file_dialog"
@@ -30,6 +29,7 @@ require_relative "spinel_studio/render/exporter"
 require_relative "spinel_studio/render/preview"
 require_relative "spinel_studio/render/player"
 require_relative "spinel_studio/render/scrub_strip"
+require_relative "spinel_studio/recording/excluded_windows"
 require_relative "spinel_studio/recording/recorder"
 require_relative "spinel_studio/recording/recording_session"
 require_relative "spinel_studio/recording/area_outline"
@@ -37,7 +37,6 @@ require_relative "spinel_studio/recording/area_frame"
 require_relative "spinel_studio/ui/theme"
 require_relative "spinel_studio/ui/shortcuts"
 require_relative "spinel_studio/ui/button"
-require_relative "spinel_studio/ui/system_cursor"
 require_relative "spinel_studio/ui/pointers"
 require_relative "spinel_studio/ui/toolbar"
 require_relative "spinel_studio/recording/area_picker"
