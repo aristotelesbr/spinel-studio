@@ -28,6 +28,9 @@ script/build && script/render_check   # exports a synthetic take
 
 Code that needs no window or native library gets a test in `test/`.
 
+GitHub Actions runs the same checks on every pull request, with the Spinel
+revision in `.spinel-revision`.
+
 ## Code
 
 Read [ARCHITECTURE.md](ARCHITECTURE.md) first. In short:
@@ -47,6 +50,14 @@ Read [ARCHITECTURE.md](ARCHITECTURE.md) first. In short:
 - One topic per pull request. Link the issue it closes.
 - For a change you can see, add a screenshot or a short recording to the
   pull request.
+- A change users notice gets a line under `Unreleased` in
+  [CHANGELOG.md](CHANGELOG.md).
+
+## Releases
+
+`script/release X.Y.Z` moves `Unreleased` under the version, sets it in
+`Info.plist`, commits and tags. Pushing the tag runs the Release workflow,
+which builds the app and publishes it with the notes from the CHANGELOG.
 
 ## License
 
