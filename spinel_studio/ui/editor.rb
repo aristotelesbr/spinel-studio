@@ -261,7 +261,7 @@ class Editor < Window
     present
     if ExportWindow.run(exporter, @settings) == :done
       exporter.finish
-      Process.wait(Process.spawn("open #{FFmpeg.quote(path)}"))
+      Process.wait(Process.spawn("#{Host::OPEN} #{FFmpeg.quote(path)}"))
       @status = "Exported"
     else
       exporter.cancel

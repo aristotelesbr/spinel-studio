@@ -1,5 +1,5 @@
 // Screen capture through ScreenCaptureKit, exposed as plain C functions
-// for Spinel's FFI (spinel_studio/platform/screen_capture.rb).
+// for Spinel's FFI (spinel_studio/platform/macos/screen_capture.rb).
 //
 // A stream keeps the newest frame of the main display in NV12, leaving
 // out one window (the app's toolbar). A screenshot gives one BGRA image.

@@ -6,14 +6,13 @@ require "json"
 # and never reads the JSON itself. Values a new project starts from live
 # under "project"; each take then keeps its own copy in project-config.json.
 class Settings
-  USER_FILE = File.expand_path("~/Library/Application Support/Spinel Studio/settings.json")
   DEVELOPMENT_FILE = File.expand_path("../config/application.json", __dir__)
 
   attr_reader :app, :theme, :toolbar, :recording, :export, :editor, :render
 
   def self.load
     defaults = JSON.parse(File.read(defaults_file))
-    user = File.exist?(USER_FILE) ? JSON.parse(File.read(USER_FILE)) : {}
+    user = File.exist?(Host::USER_SETTINGS) ? JSON.parse(File.read(Host::USER_SETTINGS)) : {}
     Settings.new(merged(defaults, user))
   end
 
