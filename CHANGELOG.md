@@ -6,6 +6,19 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-20
+
+### Added
+
+- Cmd+E exports from the editor, and the Export button shows the shortcut.
+- The export window shows the time left once the export has run a few
+  seconds (`editor.timeLeftAfter`).
+- `docs/SETTINGS.md` lists every setting with its default and what it
+  changes.
+- GitHub Actions runs the Minitest suite on macOS for every push and pull
+  request.
+- A contributing guide and a pull request template.
+
 ## [0.1.0] - 2026-11-15
 
 The first release: a screen recorder for macOS written in Ruby and compiled
@@ -29,5 +42,6 @@ by Spinel.
 - Every setting in `config/application.json`, overridable in the user's
   `settings.json`.
 
-[Unreleased]: https://github.com/aristotelesbr/spinel-studio/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/aristotelesbr/spinel-studio/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/aristotelesbr/spinel-studio/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/aristotelesbr/spinel-studio/releases/tag/v0.1.0
