@@ -9,7 +9,8 @@ if [ -z "$SPINEL" ]; then
   exit 1
 fi
 mkdir -p build
-"$SPINEL" -c bin/spinel_studio.rb -o build/spinel_studio.c >/dev/null 2>&1 || { echo "static raise check: compile to C failed"; exit 1; }
+[ "$(uname)" = Linux ] && entry=bin/spinel_studio_linux.rb || entry=bin/spinel_studio.rb
+"$SPINEL" -c "$entry" -o build/spinel_studio.c >/dev/null 2>&1 || { echo "static raise check: compile to C failed"; exit 1; }
 found=$(grep -o 'sp_raise_nomethod(sp_stage_recv_args_msg("[^"]*"' build/spinel_studio.c | sed 's/.*msg("//; s/"$//' | sort | uniq -c)
 if [ -n "$found" ]; then
   echo "static raise check FAIL:"
