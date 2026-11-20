@@ -22,7 +22,9 @@ the keys you want to change in it, under the same sections:
 
 How the file is applied (`Settings.load` and `Settings.merged`):
 
-- It is laid over the defaults. Objects are merged key by key; any other value
+- It is laid over the defaults. A system can ship a file of its own beside
+  `application.json`, named after it (`config/linux.json`), which is laid over
+  the defaults first; your file still wins. Objects are merged key by key; any other value
   (a number, a string, a list) replaces the default as a whole. So
   `"gradient"` or `"zoomRange"` must be given with all of their items, while
   `"shortcuts": { "split": ["B"] }` changes only the `split` shortcut.
