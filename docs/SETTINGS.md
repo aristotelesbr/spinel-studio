@@ -157,6 +157,7 @@ the panel refreshes, and the keyboard shortcuts.
 | `thumbnailRefresh` | `0.5` | Seconds between checks for newly written clip thumbnails. |
 | `exportSlice` | `0.1` | Seconds the export works before the export window draws again. |
 | `progressStep` | `0.01` | How much the export's progress (0 to 1) must grow before the window redraws. |
+| `timeLeftAfter` | `3.0` | Seconds an export runs before its window shows the time left. |
 | `catchUp` | `0.2` | How many seconds playback may fall behind before it drops the lost time instead of rushing to catch up. |
 | `scrubPreview` | `[960, 540]` | Width and height in pixels of the preview frames shown while dragging the playhead. |
 | `thumbnails.width` | `480` | Width in pixels of the small frames ffmpeg writes in the background for scrubbing and thumbnails. |
@@ -178,6 +179,7 @@ is the one its button shows. Keys are written like `S`, `Backspace` or
 | `undo` | `Cmd+Z` | Undoes the last edit. |
 | `redo` | `Shift+Cmd+Z` | Redoes it. |
 | `save` | `Cmd+S` | Saves the project and shows "Saved". |
+| `export` | `Cmd+E` | Asks where to save the video and exports it. |
 | `cancel` | `Escape` | Cancels a running export. |
 
 ## `render`
