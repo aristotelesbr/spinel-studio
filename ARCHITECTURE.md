@@ -79,11 +79,12 @@ and the bridge is Objective-C, so `script/build` builds the app.
 
 | Folder | Holds |
 | --- | --- |
-| `platform/` | the native libraries, as `ffi_func` declarations (SDL3, SDL3_ttf, CoreGraphics, the ScreenCaptureKit bridge), the ffmpeg processes, and `Window` / `Texture` / `Event` over SDL |
+| `platform/` | what works wherever SDL3 does: the native libraries as `ffi_func` declarations (SDL3, SDL3_ttf), the ffmpeg processes, and `Window` / `Texture` / `Event` over SDL |
+| `platform/macos/` | what only macOS has: the ScreenCaptureKit bridge, the mouse and keyboard through CoreGraphics, `SystemCursor` (macOS's own hand cursors, drawn from the system's cursor PDFs with CoreGraphics), and `Host` (the user's settings file, the `open` command). `platform/macos.rb` loads it, and `bin/spinel_studio.rb` requires that before the rest |
 | `recording/` | recording a take: `RecordingSession` (idle, countdown, recording), the recorder, its meta file, the area picker and the marks of a picked area (frame, dimmed surroundings) |
 | `project/` | a take as data: `Recording` (loads a take once), `ProjectConfig`, `Timeline`, `History` (undo / redo), `Span`, `ZoomPlan`, `Track` (the mouse log) |
 | `render/` | making frames: `FrameComposer` (camera + compositor + cursor), used by `Exporter`, `Preview` and `ScrubStrip`; `Player` (playback over the preview); `Canvas` for antialiased drawing; `RubyGem` (the gem in the app icon) |
-| `ui/` | what the windows show: `Toolbar`, `Editor` (wires the player, the timeline and the actions), `TimelinePanel` (painting), `TimelineView` (timeline geometry and gestures), `ExportWindow` (the export's progress, modal), `Button`, `Pointers` and `SystemCursor` (macOS's own hand cursors, drawn from the system's cursor PDFs with CoreGraphics), `Shortcuts`, `Theme` |
+| `ui/` | what the windows show: `Toolbar`, `Editor` (wires the player, the timeline and the actions), `TimelinePanel` (painting), `TimelineView` (timeline geometry and gestures), `ExportWindow` (the export's progress, modal), `Button`, `Pointers`, `Shortcuts`, `Theme` |
 
 `app.rb` is the floating bar's window: it asks the `RecordingSession` to record, then opens the editor.
 `native/capture.m` is the only code that is not Ruby. ScreenCaptureKit has
