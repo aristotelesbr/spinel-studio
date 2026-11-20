@@ -15,6 +15,7 @@ module SDL
   ffi_func :SDL_SetWindowPosition,   [:ptr, :int, :int], :bool
   ffi_func :SDL_GetWindowProperties, [:ptr], :uint32
   ffi_func :SDL_GetPointerProperty,  [:uint32, :str, :ptr], :ptr
+  ffi_func :SDL_GetNumberProperty,   [:uint32, :str, :long], :long
   ffi_func :SDL_GetPrimaryDisplay,   [], :uint32
   ffi_func :SDL_GetDisplayBounds,    [:uint32, :ptr], :bool
   ffi_func :SDL_GetGlobalMouseState, [:ptr, :ptr], :uint32
