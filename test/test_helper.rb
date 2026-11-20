@@ -5,7 +5,7 @@ require "minitest/autorun"
 PURE_FILES = %w[
   settings project/span project/zoom_plan project/timeline project/history project/track project/project_config project/project_folder
   recording/recording_meta render/canvas render/cursor render/camera render/compositor render/cursor_sprite
-  recording/area_outline recording/recording_session ui/theme ui/shortcuts ui/button ui/system_cursor ui/toolbar ui/timeline_view
+  recording/area_outline recording/recording_session ui/theme ui/shortcuts ui/button platform/macos/system_cursor ui/toolbar ui/timeline_view
 ].freeze
 PURE_FILES.each { |name| require_relative "../spinel_studio/#{name}" }
 

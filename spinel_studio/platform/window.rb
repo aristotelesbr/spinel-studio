@@ -125,14 +125,14 @@ class Window
     FileDialog.open(nil, folder)
   end
 
-  # The macOS window number, to leave this window out of a capture.
+  # The system's number for this window, to leave it out of a capture.
   def number
-    ScreenCapture.studio_window_number(SDL.cocoa_window(@window))
+    ScreenCapture.window_number(@window)
   end
 
   # Clicks go through to whatever is below.
   def ignore_mouse
-    ScreenCapture.studio_window_ignore_mouse(SDL.cocoa_window(@window))
+    ScreenCapture.ignore_mouse(@window)
   end
 
   # Takes events without acting on them for milliseconds (lets a hide

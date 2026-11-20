@@ -1,20 +1,29 @@
 require "json"
 
 # Every setting of the app: config/application.json (shipped inside the
-# app), with the user's own settings.json laid over it. Each section of
+# app), with the system's file (config/linux.json, when the system has
+# one) and the user's own settings.json laid over it. Each section of
 # the file has a reader object here, so code asks settings.editor.edge_grab
 # and never reads the JSON itself. Values a new project starts from live
 # under "project"; each take then keeps its own copy in project-config.json.
 class Settings
-  USER_FILE = File.expand_path("~/Library/Application Support/Spinel Studio/settings.json")
   DEVELOPMENT_FILE = File.expand_path("../config/application.json", __dir__)
 
   attr_reader :app, :theme, :toolbar, :recording, :export, :editor, :render
 
   def self.load
-    defaults = JSON.parse(File.read(defaults_file))
-    user = File.exist?(USER_FILE) ? JSON.parse(File.read(USER_FILE)) : {}
-    Settings.new(merged(defaults, user))
+    system_file = "#{File.dirname(defaults_file)}/#{Host::NAME}.json"
+    Settings.new(layered(defaults_file, [system_file, Host::USER_SETTINGS]))
+  end
+
+  # The defaults with each of the other files that exists laid over them,
+  # in order.
+  def self.layered(defaults, others)
+    data = JSON.parse(File.read(defaults))
+    others.each do |file|
+      data = merged(data, JSON.parse(File.read(file))) if File.exist?(file)
+    end
+    data
   end
 
   # Inside the app bundle the file sits in Contents/Resources.
