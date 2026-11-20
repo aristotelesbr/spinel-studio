@@ -60,7 +60,7 @@ Spinel):
 
 | Path | Holds |
 | --- | --- |
-| `bin/spinel_studio.rb` | the executable: the file Spinel compiles, with the commands (bar, record, edit, export) |
+| `bin/spinel_studio.rb` | the executable: the file Spinel compiles. It loads the system's side of `platform/`, the code, and `spinel_studio/main.rb`, which has the commands (bar, record, edit, export) |
 | `spinel_studio.rb` | loads the code below, in dependency order |
 | `spinel_studio/` | the code, below |
 | `config/application.json` | the settings |
