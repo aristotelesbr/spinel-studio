@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# Prepares the release VERSION: moves the CHANGELOG's Unreleased section
+# under the version, sets it in Info.plist, runs the tests, commits and
+# tags vVERSION. Pushing the tag is left to you; the Release workflow
+# then builds and publishes the app.
+require "date"
+
+version = ARGV[0].to_s
+abort "usage: script/release X.Y.Z" unless version.match?(/\A\d+\.\d+\.\d+\z/)
+Dir.chdir(File.expand_path("..", __dir__))
+abort "commit or stash your changes first" unless `git status --porcelain`.empty?
+abort "v#{version} already exists" if system("git", "rev-parse", "-q", "--verify", "refs/tags/v#{version}", out: File::NULL)
+
+repository = "https://github.com/aristotelesbr/spinel-studio"
+changelog = File.read("CHANGELOG.md")
+unreleased = changelog[/^## \[Unreleased\]\n(.*?)(?=^## \[)/m, 1]
+abort "CHANGELOG.md has nothing under Unreleased" if unreleased.to_s.strip.empty?
+previous = changelog[/^\[Unreleased\]: .*compare\/v(.+)\.\.\.HEAD$/, 1] or abort "CHANGELOG.md has no Unreleased link"
+
+changelog = changelog.sub("## [Unreleased]\n", "## [Unreleased]\n\n## [#{version}] - #{Date.today.iso8601}\n")
+changelog = changelog.sub(/^\[Unreleased\]: .*$/, "[Unreleased]: #{repository}/compare/v#{version}...HEAD\n" \
+                                                  "[#{version}]: #{repository}/compare/v#{previous}...v#{version}")
+File.write("CHANGELOG.md", changelog)
+
+plist = File.read("config/Info.plist")
+plist = plist.sub(%r{(<key>CFBundleShortVersionString</key><string>)[^<]*}) { "#{$1}#{version}" }
+plist = plist.sub(%r{(<key>CFBundleVersion</key><string>)(\d+)}) { "#{$1}#{$2.to_i + 1}" }
+File.write("config/Info.plist", plist)
+
+system("script/test") or abort "the tests fail; nothing was committed (git checkout CHANGELOG.md config/Info.plist to undo)"
+system("git", "commit", "-q", "-m", "Spinel Studio #{version}: the CHANGELOG and the version in Info.plist",
+       "CHANGELOG.md", "config/Info.plist") or abort "commit failed"
+system("git", "tag", "-a", "v#{version}", "-m", "Spinel Studio #{version}") or abort "tag failed"
+puts "v#{version} is committed and tagged. Publish it with:", "  git push origin main v#{version}"

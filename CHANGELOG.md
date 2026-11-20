@@ -6,6 +6,19 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- GitHub Actions builds the app with the Spinel revision in
+  `.spinel-revision` and exports a take with it, for every push and pull
+  request.
+- Pushing a version tag publishes the release: `script/release` prepares
+  it and the Release workflow builds the app and writes the notes.
+
+### Fixed
+
+- The released app opens on macOS 14 and newer. The 0.1.0 and 0.2.0
+  builds asked for macOS 27, the system they were built on.
+
 ## [0.2.0] - 2026-11-20
 
 ### Added

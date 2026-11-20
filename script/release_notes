@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+# Prints the notes of a release: the CHANGELOG section of VERSION, with
+# its wrapped lines joined (GitHub keeps line breaks in a release), and
+# how to install the preview build.
+version = ARGV[0] or abort "usage: script/release_notes VERSION"
+changelog = File.read(File.expand_path("../CHANGELOG.md", __dir__))
+section = changelog[/^## \[#{Regexp.escape(version)}\].*?\n(.*?)(?=^## \[|^\[[^\]]+\]: )/m, 1]
+abort "CHANGELOG.md has no section for #{version}" unless section
+
+blocks = section.strip.split(/\n{2,}/).map do |block|
+  block.lines.map(&:rstrip).inject("") do |text, line|
+    starts_item = line.start_with?("- ", "#") || text.empty?
+    starts_item ? "#{text}#{"\n" unless text.empty?}#{line}" : "#{text} #{line.lstrip}"
+  end
+end
+
+puts <<~NOTES
+  Spinel Studio #{version}, a screen recorder for macOS written in Ruby and compiled to a native app by [Spinel](https://github.com/matz/spinel).
+
+  #{blocks.join("\n\n")}
+
+  This is a preview build:
+
+  - **Apple Silicon and macOS 14 or newer.**
+  - **Homebrew libraries.** The app uses SDL3, SDL3_ttf and ffmpeg from Homebrew: `brew install ffmpeg sdl3 sdl3_ttf` before opening it.
+  - **Not notarized.** The first time, right-click the app and choose Open, or run `xattr -dr com.apple.quarantine "Spinel Studio.app"`. The first recording asks for the Screen Recording permission.
+
+  Download `Spinel-Studio-#{version}-arm64.zip`, unzip it and move **Spinel Studio** to Applications. To build it yourself, see the README.
+NOTES

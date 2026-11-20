@@ -1,0 +1,28 @@
+name: Set up Spinel
+description: Builds the Spinel compiler at the revision in .spinel-revision (cached) and puts it on PATH.
+
+runs:
+  using: composite
+  steps:
+    - id: revision
+      shell: sh
+      run: echo "sha=$(cat .spinel-revision)" >> "$GITHUB_OUTPUT"
+
+    - id: cache
+      uses: actions/cache@v4
+      with:
+        path: spinel-toolchain
+        key: spinel-${{ runner.os }}-${{ runner.arch }}-macos${{ env.MACOSX_DEPLOYMENT_TARGET }}-${{ steps.revision.outputs.sha }}
+
+    - name: Build Spinel
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: sh
+      run: |
+        git clone --filter=blob:none https://github.com/matz/spinel spinel-toolchain
+        cd spinel-toolchain
+        git checkout --quiet "${{ steps.revision.outputs.sha }}"
+        make deps
+        make -j"$(sysctl -n hw.ncpu)"
+
+    - shell: sh
+      run: echo "$GITHUB_WORKSPACE/spinel-toolchain/bin" >> "$GITHUB_PATH"
